@@ -435,6 +435,14 @@ main {
     background 160ms ease;
 }
 
+.algorithm-card__symbol-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
 .algorithm-card:hover,
 .algorithm-card:focus-visible,
 .algorithm-card.is-active {
@@ -457,7 +465,6 @@ main {
   color: var(--accent-strong);
   font-weight: 800;
   letter-spacing: 0.08em;
-  flex-shrink: 0;
 }
 
 .algorithm-card__body {
@@ -497,6 +504,12 @@ main {
   color: var(--accent-strong);
   font-size: 0.76rem;
   white-space: nowrap;
+}
+
+.pill--floating {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1;
 }
 
 .detail-panel {

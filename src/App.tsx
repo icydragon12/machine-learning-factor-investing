@@ -179,11 +179,13 @@ function App() {
                     onBlur={() => setHoveredAlgorithmId(null)}
                     onClick={() => handleAlgorithmClick(algorithm.id)}
                   >
-                    <span className="algorithm-card__symbol">{algorithm.symbol}</span>
+                    <div className="algorithm-card__symbol-wrap">
+                      {isPinned ? <span className="pill pill--floating">Pinned</span> : null}
+                      <span className="algorithm-card__symbol">{algorithm.symbol}</span>
+                    </div>
                     <div className="algorithm-card__body">
                       <div className="algorithm-card__header">
                         <h3>{algorithm.name}</h3>
-                        {isPinned ? <span className="pill">Pinned</span> : null}
                       </div>
                       <p>{algorithm.subtitle}</p>
                     </div>
