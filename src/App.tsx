@@ -22,6 +22,94 @@ const warningPoints = [
   'Prefer walk-forward validation.',
 ];
 
+const regimeSource = {
+  label: 'Market Regime Detection via Realized Covariances',
+  url: 'https://arxiv.org/abs/2104.03667',
+};
+
+const regimeBands = [
+  { label: 'Calm', x: 0, width: 36, color: '#007ea7', opacity: 0.16 },
+  { label: 'Transition', x: 36, width: 14, color: '#00a8e8', opacity: 0.18 },
+  { label: 'High-vol', x: 50, width: 22, color: '#003459', opacity: 0.18 },
+  { label: 'Calm', x: 72, width: 28, color: '#007ea7', opacity: 0.16 },
+];
+
+const regimeLinePoints = [
+  [0, 78],
+  [10, 74],
+  [20, 68],
+  [30, 63],
+  [36, 54],
+  [44, 48],
+  [50, 36],
+  [58, 28],
+  [64, 22],
+  [72, 34],
+  [80, 46],
+  [88, 40],
+  [100, 32],
+];
+
+function RegimeChart() {
+  const polylinePoints = regimeLinePoints.map(([x, y]) => `${x},${y}`).join(' ');
+
+  return (
+    <div className="regime-chart" aria-label="Stylized regime detection chart">
+      <svg viewBox="0 0 100 92" role="img" aria-hidden="true">
+        <rect x="0" y="0" width="100" height="92" rx="10" fill="#f6fbfe" />
+        {regimeBands.map((band) => (
+          <g key={band.label}>
+            <rect
+              x={band.x}
+              y="10"
+              width={band.width}
+              height="52"
+              rx="6"
+              fill={band.color}
+              opacity={band.opacity}
+            />
+          </g>
+        ))}
+        <polyline
+          points={polylinePoints}
+          fill="none"
+          stroke="#00171f"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        {regimeLinePoints.map(([x, y], index) => (
+          <circle key={`${x}-${y}`} cx={x} cy={y} r={index === 6 ? 2.8 : 1.7} fill="#00171f" />
+        ))}
+        <line x1="0" y1="62" x2="100" y2="62" stroke="#003459" strokeOpacity="0.18" />
+        <text x="2" y="87" fontSize="4.1" fill="#003459">
+          Calm
+        </text>
+        <text x="42" y="87" fontSize="4.1" fill="#003459">
+          Transition
+        </text>
+        <text x="80" y="87" fontSize="4.1" fill="#003459">
+          High-vol
+        </text>
+      </svg>
+      <div className="regime-legend" aria-hidden="true">
+        {regimeBands.slice(0, 3).map((band) => (
+          <span key={band.label} className="regime-legend__item">
+            <span className="regime-legend__swatch" style={{ background: band.color, opacity: 1 }} />
+            {band.label}
+          </span>
+        ))}
+      </div>
+      <p className="regime-chart__note">
+        Stylized from a published VLSTAR regime-detection model on monthly realized covariances.
+      </p>
+      <a className="source-link source-link--small" href={regimeSource.url} target="_blank" rel="noreferrer">
+        Source: {regimeSource.label}
+      </a>
+    </div>
+  );
+}
+
 function App() {
   const [selectedAlgorithmId, setSelectedAlgorithmId] = useState(algorithms[0]?.id ?? '');
   const [hoveredAlgorithmId, setHoveredAlgorithmId] = useState<string | null>(null);
@@ -89,14 +177,18 @@ function App() {
                 ML helps you map uncertainty, not pretend the market is a deterministic spreadsheet.
               </p>
             </div>
+            <div className="regime-card">
+              <p className="mini-stat__label">Regime</p>
+              <div className="regime-card__head">
+                <strong>Spot the shift, then adapt the playbook</strong>
+                <span className="regime-card__tag">VLSTAR</span>
+              </div>
+              <RegimeChart />
+            </div>
             <div className="stat-stack">
               <div className="mini-stat">
                 <span>Signal</span>
                 <strong>Extract it without overfitting it</strong>
-              </div>
-              <div className="mini-stat">
-                <span>Regime</span>
-                <strong>Know when the same factor stops behaving the same way</strong>
               </div>
               <div className="mini-stat">
                 <span>Governance</span>
