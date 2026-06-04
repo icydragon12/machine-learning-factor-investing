@@ -187,9 +187,6 @@ function App() {
                       </div>
                       <p>{algorithm.subtitle}</p>
                     </div>
-                    <span className="algorithm-card__hint">
-                      {isActive ? 'Open' : 'Hover or tap to preview'}
-                    </span>
                   </button>
                 );
               })}
