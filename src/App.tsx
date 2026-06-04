@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { algorithms } from './data/algorithms';
 import { useCases } from './data/useCases';
 import { glossary } from './data/glossary';
 import { analogyFramework, betterWorkflow, futureRoadmap, oldWorkflow } from './data/framework';
-import { canadianFinancialsReportUrl } from './data/reportLinks';
+import { canadianFinancialsReportHref } from './data/reportLinks';
+import { CanadianFinancialsReport } from './pages/CanadianFinancialsReport';
+
+const canadianFinancialsReportRoute = '#/research/canadian-financials';
 
 const sectionLinks = [
   { href: '#hero', label: 'Hero' },
@@ -185,6 +188,36 @@ function SectorCoverageBars() {
 function App() {
   const [selectedAlgorithmId, setSelectedAlgorithmId] = useState(algorithms[0]?.id ?? '');
   const [hoveredAlgorithmId, setHoveredAlgorithmId] = useState<string | null>(null);
+  const [currentHash, setCurrentHash] = useState(() => window.location.hash || '#hero');
+
+  useEffect(() => {
+    const onHashChange = () => {
+      setCurrentHash(window.location.hash || '#hero');
+    };
+
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  useEffect(() => {
+    if (currentHash === canadianFinancialsReportRoute) {
+      window.scrollTo({ top: 0, left: 0 });
+      return;
+    }
+
+    const targetId = currentHash.replace(/^#\/?/, '');
+    if (!targetId) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ block: 'start' });
+    });
+  }, [currentHash]);
+
+  if (currentHash === canadianFinancialsReportRoute) {
+    return <CanadianFinancialsReport />;
+  }
 
   const activeAlgorithm = useMemo(() => {
     const activeId = hoveredAlgorithmId ?? selectedAlgorithmId;
@@ -411,8 +444,8 @@ function App() {
                           sector-relative signals combine into a more explainable long-short
                           result.
                         </p>
-                        <a className="button button--secondary" href={canadianFinancialsReportUrl}>
-                          Open the Canadian financials report
+                        <a className="button button--secondary" href={canadianFinancialsReportHref}>
+                          Open the Canadian financials web report
                         </a>
                       </article>
                     </div>

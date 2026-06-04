@@ -1,4 +1,4 @@
-import { canadianFinancialsReportUrl } from './reportLinks';
+import { canadianFinancialsReportHref } from './reportLinks';
 
 export type UseCaseCard = {
   id: string;
@@ -17,8 +17,8 @@ export const useCases: UseCaseCard[] = [
       'Which Canadian bank stocks look strongest next month when rates, inflation, and sector context shift?',
     answer:
       'Rank Canadian bank stocks with rate-sensitive macro variables, stock momentum, and sector-relative signals. The report shows which variables survived the penalty and how that translated into a cleaner long-short spread.',
-    ctaLabel: 'Open the report',
-    href: canadianFinancialsReportUrl,
+    ctaLabel: 'Open the web report',
+    href: canadianFinancialsReportHref,
   },
   {
     id: 'factor-selection',

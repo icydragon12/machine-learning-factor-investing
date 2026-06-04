@@ -1,4 +1,4 @@
-import { canadianFinancialsReportUrl } from './reportLinks';
+import { canadianFinancialsReportHref } from './reportLinks';
 
 export type AlgorithmCard = {
   id: string;
@@ -48,7 +48,7 @@ export const algorithms: AlgorithmCard[] = [
       'Use it when you need a readable model that keeps only the variables that still matter after the penalty, instead of letting one noisy predictor dominate the result.',
     researchExample: {
       summary:
-        'Canadian case study: a walk-forward penalized regression ranked Canadian banks using BoC and Statistics Canada macro data, stock momentum, and sector context. The lasso version won on rank IC and long-short spread in the PDF report.',
+        'Canadian case study: a walk-forward penalized regression ranked Canadian banks using BoC and Statistics Canada macro data, stock momentum, and sector context. The lasso version won on rank IC and long-short spread in the web report.',
       inputs: [
         'Canadian bank and insurer stocks',
         'BoC and Statistics Canada macro series',
@@ -60,8 +60,8 @@ export const algorithms: AlgorithmCard[] = [
         'Long-short spread and rank IC',
         'Sparse coefficients that are easy to explain',
       ],
-      sourceLabel: 'Canadian financials penalized regression report',
-      sourceUrl: canadianFinancialsReportUrl,
+      sourceLabel: 'Canadian financials web report',
+      sourceUrl: canadianFinancialsReportHref,
     },
     researchHighlights: [
       {
