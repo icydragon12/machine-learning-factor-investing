@@ -127,7 +127,7 @@ function App() {
               </div>
             </article>
             <article className="card card--wide card--accent">
-              <h3>Better workflow</h3>
+              <h3>Modern workflow</h3>
               <div className="workflow">
                 {betterWorkflow.map((step, index) => (
                   <div className="workflow__step" key={step.title}>
