@@ -1,3 +1,5 @@
+import { canadianFinancialsReportUrl } from './reportLinks';
+
 export type AlgorithmCard = {
   id: string;
   symbol: string;
@@ -11,6 +13,8 @@ export type AlgorithmCard = {
     outputs: string[];
     sourceLabel: string;
     sourceUrl: string;
+    reportLabel?: string;
+    reportUrl?: string;
   };
   inputs: string[];
   outputs: string[];
@@ -39,26 +43,25 @@ export const algorithms: AlgorithmCard[] = [
     name: 'Penalized Regressions',
     subtitle: 'Linear models with discipline',
     whatItIs:
-      'Regression methods that shrink coefficients or remove variables so the model does not chase every noisy relationship.',
+      'Ordinary regression with a penalty on coefficient size. The penalty shrinks weak or redundant variables toward zero, and LASSO can drop some entirely.',
     financeUseCase:
-      'Useful when you have too many correlated factors and need to control overfitting in return models, hedges, and minimum variance portfolios.',
+      'Use it when you need a readable model that keeps only the variables that still matter after the penalty, instead of letting one noisy predictor dominate the result.',
     researchExample: {
       summary:
-        'Prime example: a double-selection LASSO study started with a huge factor zoo and then squeezed it down to a much smaller, cleaner shortlist. The model screened 191 short-term trading signals against 151 established fundamental controls in the U.S. S&P 500 universe and retained 17 price-volume and microstructure signals with significant incremental explanatory power.',
+        'Canadian case study: a walk-forward penalized regression ranked Canadian banks using BoC and Statistics Canada macro data, stock momentum, and sector context. The lasso version won on rank IC and long-short spread in the PDF report.',
       inputs: [
-        '191 short-term trading signals',
-        '151 established fundamental factors',
-        'U.S. S&P 500 stock returns',
-        'Monthly rebalancing universe',
+        'Canadian bank and insurer stocks',
+        'BoC and Statistics Canada macro series',
+        'Stock momentum and sector context',
+        'Walk-forward monthly splits',
       ],
       outputs: [
-        '17 selected trading factors',
-        'Incremental explanatory power',
-        'Significance flags after controlling for fundamentals',
+        'Ranked next-month bank stocks',
+        'Long-short spread and rank IC',
+        'Sparse coefficients that are easy to explain',
       ],
-      sourceLabel:
-        'Cross-Market Alpha: Testing Short-Term Trading Factors in the U.S. Market via Double-Selection LASSO',
-      sourceUrl: 'https://arxiv.org/abs/2601.06499',
+      sourceLabel: 'Canadian financials penalized regression report',
+      sourceUrl: canadianFinancialsReportUrl,
     },
     researchHighlights: [
       {
@@ -125,7 +128,7 @@ export const algorithms: AlgorithmCard[] = [
       'Coefficients can shift when regimes change',
     ],
     investorTranslation:
-      'Use this when you have 100 possible factors and know most are probably noise.',
+      'Use this when you have many correlated factors and want the model to keep only the ones that really earn their place.',
   },
   {
     id: 'tree-based-methods',

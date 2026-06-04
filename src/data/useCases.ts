@@ -1,11 +1,25 @@
+import { canadianFinancialsReportUrl } from './reportLinks';
+
 export type UseCaseCard = {
   id: string;
   title: string;
   question: string;
   answer: string;
+  ctaLabel?: string;
+  href?: string;
 };
 
 export const useCases: UseCaseCard[] = [
+  {
+    id: 'canadian-financials-penalized-regression',
+    title: 'Canadian financials penalized regression',
+    question:
+      'Which Canadian bank stocks look strongest next month when rates, inflation, and sector context shift?',
+    answer:
+      'Rank Canadian bank stocks with rate-sensitive macro variables, stock momentum, and sector-relative signals. The report shows which variables survived the penalty and how that translated into a cleaner long-short spread.',
+    ctaLabel: 'Open the report',
+    href: canadianFinancialsReportUrl,
+  },
   {
     id: 'factor-selection',
     title: 'Factor selection',

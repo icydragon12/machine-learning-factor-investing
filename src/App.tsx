@@ -3,6 +3,7 @@ import { algorithms } from './data/algorithms';
 import { useCases } from './data/useCases';
 import { glossary } from './data/glossary';
 import { analogyFramework, betterWorkflow, futureRoadmap, oldWorkflow } from './data/framework';
+import { canadianFinancialsReportUrl } from './data/reportLinks';
 
 const sectionLinks = [
   { href: '#hero', label: 'Hero' },
@@ -371,12 +372,55 @@ function App() {
                 <h4>What it is</h4>
                 <p>{activeAlgorithm?.whatItIs}</p>
               </div>
+              {activeAlgorithm?.id === 'penalized-regressions' ? (
+                <div className="detail-section">
+                  <h4>Penalized regression in one sentence</h4>
+                  <p>
+                    It is regular regression plus a penalty on coefficient size. LASSO uses an
+                    L1 penalty, ridge uses an L2 penalty, and both push weak variables down; in
+                    lasso, some coefficients can be pushed all the way to zero so they drop out
+                    entirely.
+                  </p>
+                </div>
+              ) : null}
               <div className="detail-section">
                 <h4>Finance use case</h4>
                 <p>{activeAlgorithm?.financeUseCase}</p>
+                {activeAlgorithm?.id === 'penalized-regressions' ? (
+                  <div className="detail-section__cta">
+                    <p className="detail-section__cta-intro">
+                      The Canadian financials project is the one worth clicking. It is a
+                      walk-forward, cross-sectional ranking model for Canadian bank stocks, with
+                      the report showing the surviving variables, the long-short spread, and the
+                      fold-by-fold results.
+                    </p>
+                    <div className="project-path-grid">
+                      <article className="project-path-card project-path-card--muted">
+                        <p className="project-path-card__label">Failed idea</p>
+                        <h5>Broad ETF forecast</h5>
+                        <p>
+                          Too blunt for the story we want to tell. The signal was hard to read, so
+                          it was not the best teaching example for a traditional finance audience.
+                        </p>
+                      </article>
+                      <article className="project-path-card project-path-card--accent">
+                        <p className="project-path-card__label">Working project</p>
+                        <h5>Canadian financials penalized regression</h5>
+                        <p>
+                          A clearer ranking problem: rate-sensitive macro data, stock momentum, and
+                          sector-relative signals combine into a more explainable long-short
+                          result.
+                        </p>
+                        <a className="button button--secondary" href={canadianFinancialsReportUrl}>
+                          Open the Canadian financials report
+                        </a>
+                      </article>
+                    </div>
+                  </div>
+                ) : null}
               </div>
               <div className="detail-section">
-                <h4>Prime literature example</h4>
+                <h4>Reference example</h4>
                 <p>{activeAlgorithm?.researchExample.summary}</p>
                 <p className="evidence-meta">
                   Inputs: [{activeAlgorithm?.researchExample.inputs.join('; ')}]
@@ -515,6 +559,11 @@ function App() {
                 <p className="card__label">{item.title}</p>
                 <h3>{item.question}</h3>
                 <p>{item.answer}</p>
+                {item.href ? (
+                  <a className="source-link" href={item.href} target="_blank" rel="noreferrer">
+                    {item.ctaLabel ?? 'Open report'}
+                  </a>
+                ) : null}
               </article>
             ))}
           </div>
