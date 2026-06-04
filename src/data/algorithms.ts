@@ -17,6 +17,19 @@ export type AlgorithmCard = {
   strengths: string[];
   weaknesses: string[];
   investorTranslation: string;
+  researchHighlights?: ResearchHighlight[];
+};
+
+export type ResearchHighlight = {
+  kind: 'funnel' | 'coverage';
+  title: string;
+  summary: string;
+  takeaway: string;
+  inputs: string[];
+  outputs: string[];
+  sourceLabel: string;
+  sourceUrl: string;
+  metrics: { label: string; value: number; max?: number }[];
 };
 
 export const algorithms: AlgorithmCard[] = [
@@ -31,7 +44,7 @@ export const algorithms: AlgorithmCard[] = [
       'Useful when you have too many correlated factors and need to control overfitting in return models, hedges, and minimum variance portfolios.',
     researchExample: {
       summary:
-        'Prime example: a double-selection LASSO study screened 191 short-term trading signals against 151 established fundamental controls in the U.S. S&P 500 universe and retained 17 price-volume and microstructure signals with significant incremental explanatory power.',
+        'Prime example: a double-selection LASSO study started with a huge factor zoo and then squeezed it down to a much smaller, cleaner shortlist. The model screened 191 short-term trading signals against 151 established fundamental controls in the U.S. S&P 500 universe and retained 17 price-volume and microstructure signals with significant incremental explanatory power.',
       inputs: [
         '191 short-term trading signals',
         '151 established fundamental factors',
@@ -47,6 +60,46 @@ export const algorithms: AlgorithmCard[] = [
         'Cross-Market Alpha: Testing Short-Term Trading Factors in the U.S. Market via Double-Selection LASSO',
       sourceUrl: 'https://arxiv.org/abs/2601.06499',
     },
+    researchHighlights: [
+      {
+        kind: 'funnel',
+        title: 'Factor zoo funnel',
+        summary:
+          'This is the cleanest finance-native story: start with a very wide signal zoo, control for the slow fundamental model, and keep only the signals that still matter.',
+        takeaway:
+          'The win is not “magic alpha from nowhere.” It is a narrower, more defensible signal set with incremental explanatory power after the benchmark controls are already in place.',
+        inputs: [
+          '191 short-term trading signals',
+          '151 established fundamental controls',
+        ],
+        outputs: ['17 retained signals', 'Significant incremental explanatory power'],
+        sourceLabel:
+          'Cross-Market Alpha: Testing Short-Term Trading Factors in the U.S. Market via Double-Selection LASSO',
+        sourceUrl: 'https://arxiv.org/abs/2601.06499',
+        metrics: [
+          { label: 'Short-term signals', value: 191, max: 191 },
+          { label: 'Fundamental controls', value: 151, max: 191 },
+          { label: 'Retained factors', value: 17, max: 191 },
+        ],
+      },
+      {
+        kind: 'coverage',
+        title: 'Sparse index tracking',
+        summary:
+          'The exclusive lasso paper shows another nice finance use case: use sparsity to build a portfolio that still covers the market instead of collapsing into only a few sectors.',
+        takeaway:
+          'The paper reports that the exclusive lasso portfolio covered all 12 sectors, compared with 10 for lasso and 6 for group lasso, and delivered visibly better out-of-sample performance.',
+        inputs: ['3,074 U.S. stocks', '90-trading-day rolling window', '12-sector universe'],
+        outputs: ['Portfolio weights', 'Sector coverage', 'Out-of-sample cumulative return'],
+        sourceLabel: 'Optimal Portfolio Using Factor Graphical Lasso',
+        sourceUrl: 'https://arxiv.org/abs/2011.00435',
+        metrics: [
+          { label: 'Exclusive lasso', value: 12, max: 12 },
+          { label: 'Lasso', value: 10, max: 12 },
+          { label: 'Group lasso', value: 6, max: 12 },
+        ],
+      },
+    ],
     inputs: [
       'Asset and factor returns',
       'Characteristics such as value, momentum, quality, size, profitability',
