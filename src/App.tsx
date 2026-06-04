@@ -212,6 +212,23 @@ function App() {
                 <h4>Finance use case</h4>
                 <p>{activeAlgorithm?.financeUseCase}</p>
               </div>
+              <div className="detail-section">
+                <h4>Prime literature example</h4>
+                <p>{activeAlgorithm?.researchExample.summary}</p>
+                <p className="evidence-meta">
+                  Inputs: [{activeAlgorithm?.researchExample.inputs.join('; ')}]
+                  <br />
+                  Outputs: [{activeAlgorithm?.researchExample.outputs.join('; ')}]
+                </p>
+                <a
+                  className="source-link"
+                  href={activeAlgorithm?.researchExample.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Source: {activeAlgorithm?.researchExample.sourceLabel}
+                </a>
+              </div>
               <div className="detail-grid">
                 <div className="detail-block">
                   <h4>Inputs</h4>
